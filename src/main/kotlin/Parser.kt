@@ -23,7 +23,7 @@ fun parse() {
     val marketplace = parse(URL(marketUrl), marketplaceTimeout)
     val cells = marketplace.select(".views-row")
     val report = Report(cells.mapNotNull { parseCell(it) }.toList(), targetCubaVersion)
-    println("Report is ready, ${report.descriptors.size} descriptors were created")
+    println("Report is ready, ${report.appComponents.size} descriptors were created")
     val jsonFile = writeJSON(report)
     println("Output file: file:///${jsonFile.toAbsolutePath().toString().replace("\\", "/")}")
 }
@@ -80,5 +80,5 @@ data class AppComponentDescriptor(
     val tags: List<String>, val vendor: String, val updateDateTime: Long?,
     val rating: String, val groupId: String, val artifactId: String, val versions: List<String>)
 
-data class Report(val descriptors: List<AppComponentDescriptor>, val cubaVersion: String)
+data class Report(val appComponents: List<AppComponentDescriptor>, val cubaVersion: String)
 
